@@ -2,12 +2,12 @@
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S3,     HTSMUX,         sensorI2CCustom)
 #pragma config(Sensor, S4,     HTGYRO,         sensorI2CHiTechnicGyro)
-#pragma config(Motor,  mtr_S1_C1_1,     ldrive,        tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S1_C1_2,     rdrive,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C1_1,     rdrive,        tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S1_C1_2,     ldrive,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_1,     flagspinner,   tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_2,     blockkicker,   tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_1,     wenchl,        tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_2,     wenchr,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_1,     wench,         tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_2,     wench,         tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S1_C4_1,    autoblock,            tServoStandard)
 #pragma config(Servo,  srvo_S1_C4_2,    irservo,              tServoStandard)
 #pragma config(Servo,  srvo_S1_C4_3,    wedgel,               tServoStandard)
@@ -160,6 +160,8 @@ task main()
 
   while (true)
   {
+  	getJoystickSettings(joystick);
+  	TankDrive(joystick.joy1_TopHat, joystick.joy1_y1, joystick.joy1_y2);
 	  ///////////////////////////////////////////////////////////
 	  ///////////////////////////////////////////////////////////
 	  ////                                                   ////
