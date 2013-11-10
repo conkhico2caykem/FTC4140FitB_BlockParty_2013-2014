@@ -2,12 +2,12 @@
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S3,     HTSMUX,         sensorI2CCustom)
 #pragma config(Sensor, S4,     HTGYRO,         sensorI2CHiTechnicGyro)
-#pragma config(Motor,  mtr_S1_C1_1,     rdrive,        tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S1_C1_2,     ldrive,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C1_1,     rdrive,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C1_2,     ldrive,        tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_1,     flagspinner,   tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_2,     blockkicker,   tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_1,     wench,         tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_2,     wench,         tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_1,     wench1,         tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_2,     wench2,         tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S1_C4_1,    autoblock,            tServoStandard)
 #pragma config(Servo,  srvo_S1_C4_2,    irservo,              tServoStandard)
 #pragma config(Servo,  srvo_S1_C4_3,    wedgel,               tServoStandard)
@@ -105,6 +105,26 @@ void TankDrive(int topHat, int y1, int y2)
 //                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void Wenches ()
+{
+	if (joy1Btn(5))
+	{
+		motor[wench1] = 30;    // spins spools towards front of bot
+		motor[wench2] = 30;
+	}
+	else if (joy1Btn(7))
+	{
+		motor[wench1] = -30;   //spins spools towards back of bot
+		motor[wench2] = -30;
+	}
+	else
+	{
+		motor[wench1] = 0;   //sets default to stop it
+		motor[wench2] = 0;
+	}
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                 //
 //                                   Block Kicker/Wedge                                            //
@@ -162,6 +182,7 @@ task main()
   {
   	getJoystickSettings(joystick);
   	TankDrive(joystick.joy1_TopHat, joystick.joy1_y1, joystick.joy1_y2);
+  	Wenches();
 	  ///////////////////////////////////////////////////////////
 	  ///////////////////////////////////////////////////////////
 	  ////                                                   ////
