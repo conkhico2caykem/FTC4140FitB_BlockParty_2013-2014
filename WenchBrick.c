@@ -22,21 +22,18 @@ task main()
 	{
 		if(nNxtButtonPressed == 2)
 		{
-			motorpower = 20;
-
-			if(motorpower < 100)
-			{
-				motorpower += motorpower;
-			}
-			motor[shoulder] = -motorpower;
+			motor[wench1] = 30;   //spins spools forwards
+			motor[wench2] = 30;
 		}
 		else if(nNxtButtonPressed == 1)
 		{
-			motor[shoulder] = 20;
+			motor[wench1] = -30;  //spins spools backwards
+			motor[wench2] = -30;
 		}
 		else
 		{
-			motor[shoulder] = 0;
+			motor[wench1] = 0;  //stops spools
+			motor[wench2] = 0;
 		}
 	}
 }
