@@ -151,7 +151,7 @@ void FlagSpinner()
 {
 	if (joy1Btn(1))
 	{
-		motor[flagspin]= 25;
+		motor[flagspin]= 50;
 	}
 	else
 	{
