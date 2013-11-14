@@ -174,11 +174,11 @@ void AutonomousBlock()
 {
 	if ((joy1Btn(6))
 	{
-		motor(spinner)= 75;
+		motor(flagspin)= 75;
 	}
 	else
 	{
-		motor (spinner) = 0;
+		motor (flagspin) = 0;
 	}
 }
 
