@@ -170,17 +170,17 @@ void FlagSpinner()
 //                                      AutoBlock                                                  //
 //                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-/*void AutonomousBlock()
+void AutonomousBlock()
 {
-	if ((joy1Btn(6))
+	if ((joy1Btn(3))
 	{
-		motor()= 75;
+		servo[autoblock] = 100;
 	}
-	else
+	else if(joy1btn(2))
 	{
-		motor () = 0;
+		servo[autoblock] = 0;
 	}
-}*/
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
