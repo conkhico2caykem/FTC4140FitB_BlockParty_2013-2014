@@ -1,7 +1,9 @@
 
 task main()
 {
-	motr[lalalala] = 200;
+	abcdefghijklmnopqrstuvwxyz
+	[lalalala] = 200;
+	hello!!!!!!!!!!!!!!!!!!!
 
 	swtymctzzdrbnmo,mnfdf
 
