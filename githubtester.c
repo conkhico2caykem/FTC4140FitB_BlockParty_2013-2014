@@ -5,6 +5,4 @@ task main()
 	[lalalala] = 200;
 	hello!!!!!!!!!!!!!!!!!!!
 
-	swtymctzzdrbnmo,mnfdf
-
 }
