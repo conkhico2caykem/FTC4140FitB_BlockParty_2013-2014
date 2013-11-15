@@ -80,11 +80,11 @@ task main()
   initializeRobot();
 
   waitForStart(); // Wait for the beginning of autonomous phase.
-  MBD(26,100,1000000);
-  servo[autoblock] = 50;
-  wait10Msec(70);
-  servo[autoblock] = 150;
-  wait10Msec(100);
-  MBD(26,100,10000000);
-  GyroLeft(45, 100000000);
+  MBD(26,100,1000000); //backs the robot to the teeter totter
+  servo[autoblock] = 50; //deploys autoblock arm to score the black in the first crate
+  wait10Msec(70); //wait to give the arm time to score
+  servo[autoblock] = 150; //moves arm back into the robot to keep it safe
+  wait10Msec(100); //waits to give it time to do that
+  MBD(26,100,10000000); //backs us onto the bridge
+  GyroLeft(45, 100000000); // turns 45 degrees left to put us parrallel to ramp
 }
