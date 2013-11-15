@@ -62,7 +62,7 @@ void MBD(int inches, int power, float timeout)
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void gyroTurn(int target, /*int buffer,*/ int drivePowerR, int drivePowerL, bool turningRight, int waitTime, float timeout)
+void gyroTurn(int target, int drivePowerR, int drivePowerL, bool turningRight, int waitTime, float timeout)
 {
   motor[rdrive] = 0;
   motor[ldrive] = 0;
@@ -80,17 +80,12 @@ void gyroTurn(int target, /*int buffer,*/ int drivePowerR, int drivePowerL, bool
     prevTime = currTime;
     if(turningRight)
     {
-      if(heading > (target /*- buffer*/))
+      if(heading > (target))
       {
         motor[rdrive] = -(drivePowerR);
         motor[ldrive] = (drivePowerL);
       }
-      //else if(heading > (target + buffer))
-      //{
-      //  motor[rdrive] = (drivePowerR);
-      //  motor[ldrive] = -(drivePowerL);
-      //}
-      else /*if(heading < (target + buffer) && heading > (target - buffer))*/
+      else
       {
         motor[rdrive] = 0;
         motor[ldrive] = 0;
@@ -100,17 +95,12 @@ void gyroTurn(int target, /*int buffer,*/ int drivePowerR, int drivePowerL, bool
     }
     else
     {
-      if(heading < (target/* - buffer*/))
+      if(heading < (target))
       {
         motor[rdrive] = (drivePowerR);
         motor[ldrive] = -(drivePowerL);
       }
-      //else if(heading > (target + buffer))
-      //{
-      //  motor[rdrive] = -(drivePowerR);
-      //  motor[ldrive] = (drivePowerL);
-      //}
-      else /*if(heading < (target + buffer) && heading > (target - buffer))*/
+      else
       {
         motor[rdrive] = 0;
         motor[ldrive] = 0;
@@ -129,14 +119,14 @@ void GyroLeft(float degrees, float timeo)
 {
 	degrees = degrees * 0.93;
 	ClearTimer(T1);
-	gyroTurn(degrees, /*3,*/ 100, 77, false, 10, timeo);
+	gyroTurn(degrees, 100, 77, false, 10, timeo);
 }
 
 void GyroRight(float degrees, float timeo)
 {
 	degrees = degrees * 0.93;
 	ClearTimer(T1);
-	gyroTurn(-degrees,/* 3,*/ 100, 77, true, 10, timeo);
+	gyroTurn(-degrees, 100, 77, true, 10, timeo);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
