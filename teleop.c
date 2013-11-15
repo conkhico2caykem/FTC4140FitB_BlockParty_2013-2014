@@ -172,13 +172,13 @@ void FlagSpinner()
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 void AutonomousBlock()
 {
-	if ((joy1Btn(3))
+	if (joy1Btn(3))
 	{
-		servo[autoblock] = 100;
+		servo[autoblock] = 255;
 	}
-	else if(joy1btn(2))
+	else if(joy1Btn(2))
 	{
-		servo[autoblock] = 0;
+		servo[autoblock] = 50;
 	}
 }
 
@@ -223,6 +223,7 @@ task main()
   	BlockKicker();
   	kicklinney();
   	FlagSpinner();
+  	AutonomousBlock();
 	  ///////////////////////////////////////////////////////////
 	  ///////////////////////////////////////////////////////////
 	  ////                                                   ////
