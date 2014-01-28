@@ -56,11 +56,11 @@ void MBD(int inches, int power, float timeout)
 		motor[ldrive] = 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//                             uses gyro sensor to turn accurately
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                             //uses gyro sensor to turn accurately
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void gyroTurn(int target, int drivePowerR, int drivePowerL, bool turningRight, int waitTime, float timeout)
 {
@@ -135,7 +135,7 @@ void GyroRight(float degrees, float timeo)
 ////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void StraightGyro(int power, int target, int buffer, int adjPower, int waitTime, int encDis)  //encDis is a negative number when going forward for both motors
+void StraightGyro(int power, int target, int buffer, int adjPower, int waitTime, int encDis)
 {
   motor[rdrive] = 0;
   motor[ldrive] = 0;
@@ -144,7 +144,7 @@ void StraightGyro(int power, int target, int buffer, int adjPower, int waitTime,
   float heading = 0.0;
   long currTime;
   long prevTime = nPgmTime;
-  while(nMotorEncoder[rdrive] > encDis)
+  while(nMotorEncoder[rdrive] < encDis)
   {
     motor[rdrive] = power;
     motor[ldrive] = power;
@@ -171,7 +171,9 @@ void StraightGyro(int power, int target, int buffer, int adjPower, int waitTime,
   motor[ldrive] = 0;
 }
 
-void straight (int power, int adjPower, int encDis)
+void straight (int power, int adjPower, int inches)
 {
+	nMotorEncoder[rdrive] = 0;
+	int encDis = (inches * 142.8) - 190;
 	StraightGyro(power, 0, 3, adjPower, 100, encDis);
 }
