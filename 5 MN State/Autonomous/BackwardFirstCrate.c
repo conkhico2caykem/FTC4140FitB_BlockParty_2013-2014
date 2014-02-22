@@ -1,11 +1,10 @@
 #pragma config(Hubs,  S1, HTMotor,  HTMotor,  HTMotor,  HTMotor)
 #pragma config(Hubs,  S2, HTServo,  HTServo,  none,     none)
 #pragma config(Sensor, S3,     HTGYRO,         sensorI2CHiTechnicGyro)
-#pragma config(Sensor, S4,     HTIRS2,         sensorI2CCustom)
 #pragma config(Motor,  mtr_S1_C1_1,     ldrive,        tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C1_2,     rdrive,        tmotorTetrix, openLoop, encoder)
-#pragma config(Motor,  mtr_S1_C2_1,     winchr,        tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S1_C2_2,     winchl,        tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S1_C2_1,     winchr,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C2_2,     winchl,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_1,     flagspin,      tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C3_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C4_1,     shooter,       tmotorTetrix, openLoop, reversed, encoder)
@@ -35,11 +34,9 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "BlockPartyIncludes.c"
 
-//int _dirAC;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,11 +55,9 @@
 
 void initializeRobot()
 {
-		servo[scoopL] = 0;
+	servo[scoopL] = 0;
 	servo[scoopR] = 255;
-	servo[autoblock] = 0;  //make autoarm legal
-	servo[turret] = 37;
-	_dirAC = HTIRS2readACDir(HTIRS2);
+	servo[autoblock] = 160;
   // Place code here to sinitialize servos to starting positions.
   // Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
 
@@ -93,21 +88,28 @@ void initializeRobot()
 
 task main()
 {
-	initializeRobot();
-	nMotorEncoder[rdrive] = 0;
-	while(true)
-	{
-		if(_dirAC != 5)
-		{
-  		_dirAC = HTIRS2readACDir(HTIRS2);
-  		motor[ldrive] = 100;
-  		motor[rdrive] = 100;
-  	}
-  //		if(_dirAC == 5)
-  	else
-  	{
-  			motor[ldrive] = 0;
-  			motor[rdrive] = 0;
-  	}
-	}
+  initializeRobot();
+
+  waitForStart(); // Wait for the beginning of autonomous phase.
+
+  MBD(20, 100, 10000000);
+  wait10Msec(50);
+  servo[autoblock] = 0;
+  wait10Msec(100);
+  MBD(15, 100, 10000000);
+  GyroLeft(45, 1000000000);
+  MBD(30, 100, 10000000);
+
+
+
+  ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+  ////                                                   ////
+  ////    Add your robot specific autonomous code here.  ////
+  ////                                                   ////
+  ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  while (true)
+  {}
 }

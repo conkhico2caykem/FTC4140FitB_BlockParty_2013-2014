@@ -35,11 +35,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "BlockPartyIncludes.c"
 
-//int _dirAC;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -56,13 +55,13 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+int _dirAC;
+
 void initializeRobot()
 {
-		servo[scoopL] = 0;
+	servo[scoopL] = 0;
 	servo[scoopR] = 255;
 	servo[autoblock] = 0;  //make autoarm legal
-	servo[turret] = 37;
-	_dirAC = HTIRS2readACDir(HTIRS2);
   // Place code here to sinitialize servos to starting positions.
   // Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
 
@@ -93,21 +92,122 @@ void initializeRobot()
 
 task main()
 {
-	initializeRobot();
-	nMotorEncoder[rdrive] = 0;
-	while(true)
+  initializeRobot();
+
+  waitForStart(); // Wait for the beginning of autonomous phase.
+
+  servo[scoopL] = 200;
+	servo[scoopR] = 55;
+
+	straight(100, 100, 10);
+	wait10Msec(10);
+	_dirAC = HTIRS2readACDir(HTIRS2);      //read IR seeker value
+	if(_dirAC < 6)
 	{
-		if(_dirAC != 5)
+		//insert code to dump block
+		motor[rdrive] = 0;
+		motor[ldrive] = 0;
+		servo[autoblock] = 250;
+		wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+		servo[autoblock] = 5;
+		wait10Msec(70);
+		servo[scoopL] = 255;
+		servo[scoopR] = 0;
+		straight(100,100, 53);  //Straight to end of ramp (distance changes depending on what basket your at)
+		wait10Msec(10);
+		GyroRight(39, 100000000); //turn 45 degrees to drive parralel to ramp
+		wait10Msec(10);
+		MFD(16, 100, 1000000); //drives forward a little to turn
+		wait10Msec(10);
+		GyroRight(35, 10000000); //turn to drive towards white line
+		wait10Msec(10);
+		MFD(50, 100, 1000000); //drives forward to first white line  (change for second white line)
+		wait10Msec(10);
+	  GyroLeft(88, 100000);//turn to drive on ramp
+	  wait10Msec(10);
+	  MBD(38, 100, 1000000);//drives on ramp an inch past the midpoint
+	}
+	else
+	{
+		straight(100, 100, 10);
+	  _dirAC = HTIRS2readACDir(HTIRS2);      //read IR seeker value
+		if(_dirAC < 6)
 		{
-  		_dirAC = HTIRS2readACDir(HTIRS2);
-  		motor[ldrive] = 100;
-  		motor[rdrive] = 100;
-  	}
-  //		if(_dirAC == 5)
-  	else
-  	{
-  			motor[ldrive] = 0;
-  			motor[rdrive] = 0;
-  	}
+			motor[rdrive] = 0;
+			motor[ldrive] = 0;
+			servo[autoblock] = 250;
+			wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+			servo[autoblock] = 5;
+			wait10Msec(70);
+			servo[scoopL] = 255;
+			servo[scoopR] = 0;
+			straight(100,100, 43);  //Straight to end of ramp (distance changes depending on what basket your at)
+			wait10Msec(10);
+			GyroRight(39, 100000000); //turn 45 degrees to drive parralel to ramp
+			wait10Msec(10);
+			MFD(16, 100, 1000000); //drives forward a little to turn
+			wait10Msec(10);
+			GyroRight(35, 10000000); //turn to drive towards white line
+			wait10Msec(10);
+			MFD(50, 100, 1000000); //drives forward to first white line  (change for second white line)
+			wait10Msec(10);
+	  	GyroLeft(88, 100000);//turn to drive on ramp
+	  	wait10Msec(10);
+	  	MBD(38, 100, 1000000);//drives on ramp an inch past the midpoint
+		}
+		else
+		{
+			straight(100, 100, 20);
+			 _dirAC = HTIRS2readACDir(HTIRS2);      //read IR seeker value
+			if(_dirAC < 7)
+			{
+				motor[rdrive] = 0;
+				motor[ldrive] = 0;
+				servo[autoblock] = 250;
+				wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+				servo[autoblock] = 5;
+				wait10Msec(70);
+				servo[scoopL] = 255;
+				servo[scoopR] = 0;
+				straight(100,100, 23);  //Straight to end of ramp (distance changes depending on what basket your at)
+				wait10Msec(10);
+				GyroRight(39, 100000000); //turn 45 degrees to drive parralel to ramp
+				wait10Msec(10);
+				MFD(16, 100, 1000000); //drives forward a little to turn
+				wait10Msec(10);
+				GyroRight(35, 10000000); //turn to drive towards white line
+				wait10Msec(10);
+				MFD(50, 100, 1000000); //drives forward to first white line  (change for second white line)
+				wait10Msec(10);
+	  		GyroLeft(88, 100000);//turn to drive on ramp
+	  		wait10Msec(10);
+	  		MBD(38, 100, 1000000);//drives on ramp an inch past the midpoint
+			}
+			else
+			{
+				straight(100, 100, 10);
+				motor[rdrive] = 0;
+				motor[ldrive] = 0;
+				servo[autoblock] = 250;
+				wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+				servo[autoblock] = 5;
+				wait10Msec(70);
+				servo[scoopL] = 255;
+				servo[scoopR] = 0;
+				straight(100,100, 13);  //Straight to end of ramp (distance changes depending on what basket your at)
+				wait10Msec(10);
+				GyroRight(39, 100000000); //turn 45 degrees to drive parralel to ramp
+				wait10Msec(10);
+				MFD(16, 100, 1000000); //drives forward a little to turn
+				wait10Msec(10);
+				GyroRight(35, 10000000); //turn to drive towards white line
+				wait10Msec(10);
+				MFD(50, 100, 1000000); //drives forward to first white line  (change for second white line)
+				wait10Msec(10);
+	  		GyroLeft(88, 100000);//turn to drive on ramp
+	  		wait10Msec(10);
+	  		MBD(38, 100, 1000000);//drives on ramp an inch past the midpoint
+			}
+		}
 	}
 }

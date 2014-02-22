@@ -35,11 +35,9 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "BlockPartyIncludes.c"
 
-//int _dirAC;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,11 +56,8 @@
 
 void initializeRobot()
 {
-		servo[scoopL] = 0;
+	servo[scoopL] = 0;
 	servo[scoopR] = 255;
-	servo[autoblock] = 0;  //make autoarm legal
-	servo[turret] = 37;
-	_dirAC = HTIRS2readACDir(HTIRS2);
   // Place code here to sinitialize servos to starting positions.
   // Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
 
@@ -93,21 +88,23 @@ void initializeRobot()
 
 task main()
 {
-	initializeRobot();
-	nMotorEncoder[rdrive] = 0;
-	while(true)
-	{
-		if(_dirAC != 5)
-		{
-  		_dirAC = HTIRS2readACDir(HTIRS2);
-  		motor[ldrive] = 100;
-  		motor[rdrive] = 100;
-  	}
-  //		if(_dirAC == 5)
-  	else
-  	{
-  			motor[ldrive] = 0;
-  			motor[rdrive] = 0;
-  	}
-	}
+  initializeRobot();
+
+  waitForStart(); // Wait for the beginning of autonomous phase.
+
+  servo[scoopL] = 255;
+	servo[scoopR] = 0;
+
+  MFD(64, 100, 1000000000);
+
+  ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+  ////                                                   ////
+  ////    Add your robot specific autonomous code here.  ////
+  ////                                                   ////
+  ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  while (true)
+  {}
 }

@@ -35,11 +35,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 #include "BlockPartyIncludes.c"
 
-//int _dirAC;
+int CrateEnc;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,11 +58,10 @@
 
 void initializeRobot()
 {
-		servo[scoopL] = 0;
+	servo[scoopL] = 0;
 	servo[scoopR] = 255;
 	servo[autoblock] = 0;  //make autoarm legal
 	servo[turret] = 37;
-	_dirAC = HTIRS2readACDir(HTIRS2);
   // Place code here to sinitialize servos to starting positions.
   // Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
 
@@ -93,21 +92,43 @@ void initializeRobot()
 
 task main()
 {
-	initializeRobot();
-	nMotorEncoder[rdrive] = 0;
-	while(true)
-	{
-		if(_dirAC != 5)
-		{
-  		_dirAC = HTIRS2readACDir(HTIRS2);
-  		motor[ldrive] = 100;
-  		motor[rdrive] = 100;
-  	}
-  //		if(_dirAC == 5)
-  	else
-  	{
-  			motor[ldrive] = 0;
-  			motor[rdrive] = 0;
-  	}
+  initializeRobot();
+
+  waitForStart(); // Wait for the beginning of autonomous phase.
+  _dirAC = HTIRS2readACDir(HTIRS2);
+  straightIRG(100, 75, 6500);
+  if(IRdis < 1170)
+  {
+  	CrateEnc = (1635 - IRdis);
+  	straightEnc(100, 75, CrateEnc);
+  	servo[autoblock] = 250;
+		wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+		servo[autoblock] = 5;
 	}
+  else if (IRdis > 1169 && IRdis < 3760)
+  {
+  	CrateEnc = (3058 - IRdis);
+  	straightEnc(100, 75, CrateEnc);
+  	servo[autoblock] = 250;
+		wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+		servo[autoblock] = 5;
+  }
+  else if(IRdis > 3759 && IRdis < 6330)
+  {
+  	CrateEnc = (5933 - IRdis);
+  	straightEnc(100, 75, CrateEnc);
+  	servo[autoblock] = 250;
+		wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+		servo[autoblock] = 5;
+  }
+  else
+  {
+  	CrateEnc = (7230 - IRdis);
+  	straightEnc(100, 75, CrateEnc);
+  	servo[autoblock] = 250;
+		wait10Msec(100); //for testing only, remove when block dump is added  THIS IS FOR ALL WAIT(3000000)!!!!
+		servo[autoblock] = 5;
+  }
+	motor[rdrive] = 0;
+	motor[ldrive] = 0;
 }
